@@ -282,4 +282,4 @@ bindsym $mod+t exec "emacsclient -c -a \\"\\""
 # WALLPAPER #
 #############
 # ESA wallpapers of 2020
-exec_always --no-startup-id "./.i3/wallpaper/wallpaperScript.sh"
+exec_always --no-startup-id "${HOME}/.dotfiles/.i3/wallpaper/wallpaperScript.sh"

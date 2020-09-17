@@ -41,4 +41,4 @@ case $CURRENTMONTH in
 	;;
 esac
 
-eval "nitrogen --set-centered ./ESA-Calendar/Sentinel-Calendar-'$wallpaper'.jpg"
+eval "nitrogen --set-centered ~/.dotfiles/.i3/wallpaper/ESA-Calendar/Sentinel-Calendar-'$wallpaper'.jpg"
