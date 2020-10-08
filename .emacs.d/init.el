@@ -247,13 +247,14 @@
         ("FIXME"  . "#FF0000")
         ("DEBUG"  . "#A020F0")
         ("GOTCHA" . "#FF4500")
-        ("STUB"   . "#1E90FF")))
+        ("STUB"   . "#1E90FF")
+	("REVIEW" . "#1E90FF")))
 ;; REVIEW: Solve 'assignment to free variable' on this commented lines
 ;; (define-key hl-todo-mode-map (kbd "C-c p") 'hl-todo-previous)
 ;; (define-key hl-todo-mode-map (kbd "C-c n") 'hl-todo-next)
 ;; (define-key hl-todo-mode-map (kbd "C-c o") 'hl-todo-occur)
 ;; (define-key hl-todo-mode-map (kbd "C-c i") 'hl-todo-insert)
-(global-hl-line-mode 1)
+(global-hl-todo-mode 1)
 
 
 ;; Indent fucking Whole Buffer (by github.com/skgsergio)
