@@ -51,7 +51,7 @@
 
 ;; Indentation
 (setq tab-width 2
-	indent-tabs-mode nil)
+      indent-tabs-mode nil)
 
 ;; yes/no --> y/n
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -89,15 +89,15 @@
 (use-package markdown-mode
   :ensure t
   :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
+         ("\\.md\\'"       . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-;; Modeline
+;; Modeline (I love the the doom modeline)
 (use-package doom-modeline
-	     :ensure t
-	     :defer t
-	     :hook (after-init . doom-modeline-mode))
+  :ensure t
+  :defer t
+  :hook (after-init . doom-modeline-mode))
 
 (setq doom-modeline-height 10)
 (setq doom-modeline-buffer-file-name-style 'truncate-from-project)
@@ -110,38 +110,44 @@
 (setq find-file-visit-truename t)
 
 
-;; Doom themes
+;; Doom themes (I aso love the doom themes :D)
 (use-package doom-themes
-	     :ensure t
-	     :init (load-theme 'doom-vibrant t)
-	     :config (doom-themes-org-config)
-	             (doom-themes-neotree-config))
+  :ensure t
+  :init (load-theme 'doom-vibrant t)
+  :config (doom-themes-org-config)
+  (doom-themes-neotree-config))
+
 
 ;; Helm configuration
+(eval-when-compile
+  (defvar helm-buffers-fuzzy-matching)
+  (defvar helm-recentf-fuzzy-match)
+  (defvar helm-M-x-fuzzy-match)
+)
 (use-package helm
-	     :ensure t
-	     :init (helm-mode 1)
-	     :config (require 'helm-config
-			      (setq helm-split-window-inside-p t
-				    helm-buffers-fuzzy-matching t
-				    helm-recentf-fuzzy-match t
-				    helm-move-to-line-cycle-in-source t
-				    helm-M-x-fuzzy-match nil))
-	     :bind (("C-x C-f" . helm-find-files)
-		    ("M-x" . helm-M-x)
-		    ("C-x b" . helm-mini)
-		    ("C-x C-b" . helm-buffers-list)
-		    ("C-c g" . helm-google-suggest)))
+  :ensure t
+  :init (helm-mode 1)
+  :config (require 'helm-config
+                   (setq helm-split-window-inside-p  t
+                         helm-buffers-fuzzy-matching t
+                         helm-recentf-fuzzy-match    t
+                         helm-move-to-line-cycle-in-source t
+                         helm-M-x-fuzzy-match        nil))
+  :bind (("C-x C-f" . helm-find-files)
+         ("M-x"     . helm-M-x)
+         ("C-x b"   . helm-mini)
+         ("C-x C-b" . helm-buffers-list)
+         ("C-c g"   . helm-google-suggest)))
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 
 
 ;; Movement through buffer with arrows
 (use-package windmove
-	     :ensure t
-	     :bind (("C-<up>" . windmove-up)
-		    ("C-<down>" . windmove-down)
-		    ("C-<right>" . windmove-right)
-		    ("C-<left>" . windmove-left)))
+  :ensure t
+  :bind (("C-<up>"    . windmove-up)
+         ("C-<down>"  . windmove-down)
+         ("C-<right>" . windmove-right)
+         ("C-<left>"  . windmove-left)))
 
 
 ;;; EXTERNAL PACKAGES
@@ -153,10 +159,10 @@
 ;; Multiple cursors
 (use-package multiple-cursors
   :ensure t
-  :bind(("C-c mc" . mc/edit-lines)
-	("C->" . mc/mark-next-like-this)
-	("C-<" . mc/mark-previous-like-this)
-	("C-c C-<" . mc/mark-all-like-this)))
+  :bind(("C-c mc"  . mc/edit-lines)
+        ("C->"     . mc/mark-next-like-this)
+        ("C-<"     . mc/mark-previous-like-this)
+        ("C-c C-<" . mc/mark-all-like-this)))
 ;; C-' -> Hide/Unhide all lines without a cursor
 ;; C-g -> exit
 
@@ -176,15 +182,15 @@
 
 ;; Rainbow delimiters
 (use-package rainbow-delimiters
-	     :ensure t
-	     :init
-	     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode 1))
+  :ensure t
+  :init
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode 1))
 (show-paren-mode t)
 
 
 ;; All-the-icons
 (use-package all-the-icons
-	     :ensure t)
+  :ensure t)
 
 ;; Neotree (to be hones, I don't use it)
 (use-package neotree
@@ -209,14 +215,14 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (use-package yasnippet-snippets
-	     :ensure t)
+  :ensure t)
 
 
 ;; Company
 (use-package company
-	     :ensure t
-	     :init (global-company-mode)
-	     :bind ("C-<tab>" . company-yasnippet))
+  :ensure t
+  :init (global-company-mode)
+  :bind ("C-<tab>" . company-yasnippet))
 (add-hook 'after-init-hook 'global-company-mode) ; Enabled on all buffers
 ;; Company-quickhelp
 (use-package company-quickhelp
@@ -230,7 +236,7 @@
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode)
-)
+  )
 
 
 ;; Ispell and Flyspell
@@ -241,19 +247,15 @@
 (add-hook 'text-mode-hook 'flyspell-mode)
 
 
-;; hl-todo-mode REVIEW: Test if this works with defvar
+;; hl-todo-mode
 (defvar hl-todo-keyword-faces
-      '(("TODO"   . "#FF0000")
-        ("FIXME"  . "#FF0000")
-        ("DEBUG"  . "#A020F0")
-        ("GOTCHA" . "#FF4500")
-        ("STUB"   . "#1E90FF")
-	("REVIEW" . "#1E90FF")))
-;; REVIEW: Solve 'assignment to free variable' on this commented lines
-;; (define-key hl-todo-mode-map (kbd "C-c p") 'hl-todo-previous)
-;; (define-key hl-todo-mode-map (kbd "C-c n") 'hl-todo-next)
-;; (define-key hl-todo-mode-map (kbd "C-c o") 'hl-todo-occur)
-;; (define-key hl-todo-mode-map (kbd "C-c i") 'hl-todo-insert)
+  '(("TODO"   . "#FF0000")
+    ("FIXME"  . "#FF0000")
+    ("DEBUG"  . "#A020F0")
+    ("GOTCHA" . "#FF4500")
+    ("STUB"   . "#1E90FF")
+    ("REVIEW" . "#1E90FF")
+    ("DOING"  . "#49FF00")))
 (global-hl-todo-mode 1)
 
 
@@ -264,8 +266,8 @@
   (delete-trailing-whitespace)
   (indent-region (point-min) (point-max) nil)
   (untabify (point-min) (point-max))
-  (message "indent buffer: done.")
-)
+  (message "Indent buffer: DONE")
+  )
 (global-set-key (kbd "M-i") 'iwb)
 
 
@@ -293,10 +295,10 @@
 (require 'org-habit)
 (add-to-list 'org-modules "org-habit")
 (setq org-habit-preceding-days 7
-	org-habit-following-days 1
-      	org-habit-graph-column 80
-      	org-habit-show-habits-only-for-today t
-      	org-habit-show-all-today t)
+      org-habit-following-days 1
+      org-habit-graph-column 80
+      org-habit-show-habits-only-for-today t
+      org-habit-show-all-today t)
 
 
 ;; Org-Babel
@@ -317,7 +319,7 @@
                                           (condition-case nil
                                               (org-display-inline-images)
                                             (error nil)))
-    	  'append)
+          'append)
 
 ;; Org-abbrev
 (add-hook 'org-mode-hook (lambda () (abbrev-mode 1)))
