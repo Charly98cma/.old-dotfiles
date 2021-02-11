@@ -53,6 +53,12 @@
 (setq tab-width 2
       indent-tabs-mode nil)
 
+;; Max. chars per line (auto-fill-mode)
+(add-hook 'text-mode-hook #'auto-fill-mode)
+(add-hook 'prog-mode-hook #'auto-fill-mode)
+(setq-default fill-column 80)
+
+
 ;; yes/no --> y/n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -122,8 +128,7 @@
 (eval-when-compile
   (defvar helm-buffers-fuzzy-matching)
   (defvar helm-recentf-fuzzy-match)
-  (defvar helm-M-x-fuzzy-match)
-)
+  (defvar helm-M-x-fuzzy-match))
 (use-package helm
   :ensure t
   :init (helm-mode 1)
@@ -192,21 +197,20 @@
 (use-package all-the-icons
   :ensure t)
 
-;; Neotree (to be hones, I don't use it)
-(use-package neotree
-  :ensure t
-  :bind (("C-x n" . neotree-toggle))
-  :config (setq-default neo-show-hidden-files t)
-  (setq neo-smart-open t))
-(setq neo-theme (if (display-graphic-p) 'icons)) ; Display icons
-;; Neotree commands
-;; C-x n -> open/close neotree
-;; g -> refresh
-;; H -> show hidden files
-;; C-c C-n -> Create file (dir if end with "/")
-;; C-c C-d -> Delete file/dir
-;; C-c C-r -> Rename file/dir
-;; C-c C-p -> Copy file/dir
+;; Neotree (to be honest, I don't use it)
+;;    C-x n -> open/close neotree
+;;    g -> refresh
+;;    H -> show hidden files
+;;    C-c C-n -> Create file (dir if end with "/")
+;;    C-c C-d -> Delete file/dir
+;;    C-c C-r -> Rename file/dir
+;;    C-c C-p -> Copy file/dir
+;; (use-package neotree
+;;   :ensure t
+;;   :bind (("C-x n" . neotree-toggle))
+;;   :config (setq-default neo-show-hidden-files t)
+;;   (setq neo-smart-open t))
+;; (setq neo-theme (if (display-graphic-p) 'icons)) ; Display icons
 
 
 ;; Yasnippet
@@ -252,8 +256,6 @@
   '(("TODO"   . "#FF0000")
     ("FIXME"  . "#FF0000")
     ("DEBUG"  . "#A020F0")
-    ("GOTCHA" . "#FF4500")
-    ("STUB"   . "#1E90FF")
     ("REVIEW" . "#1E90FF")
     ("DOING"  . "#49FF00")))
 (global-hl-todo-mode 1)
@@ -266,8 +268,7 @@
   (delete-trailing-whitespace)
   (indent-region (point-min) (point-max) nil)
   (untabify (point-min) (point-max))
-  (message "Indent buffer: DONE")
-  )
+  (message "Indent buffer: DONE"))
 (global-set-key (kbd "M-i") 'iwb)
 
 
@@ -333,6 +334,11 @@
 
 
 ;;; PROGRAMMING LANGUAGES AND MORE STUFF
+
+;; Elixir mode
+(unless (package-installed-p 'alchemist)
+  (package-install 'alchemist))
+
 
 ;; Matlab (thanks @ignaciobll -> github.com/ignaciobll/.emacs.d)
 (use-package matlab-mode
