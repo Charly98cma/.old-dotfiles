@@ -45,9 +45,9 @@
 (delete-selection-mode t)
 
 ;; Splash-screen
-(setq inhibit-splash-screen t)
+(setq inhibit-splash-screen     t)
 (setq initial-scratch-message nil)
-(setq inhibit-startup-screen t)
+(setq inhibit-startup-screen    t)
 
 ;; Indentation
 (setq tab-width 2
@@ -62,7 +62,7 @@
 ;; yes/no --> y/n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Backup and Autosaves (thanks Git ;D)
+;; No Backup and Autosaves (thanks Git ;D)
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
@@ -239,8 +239,7 @@
 ;; Flycheck
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode)
-  )
+  :init (global-flycheck-mode))
 
 
 ;; Ispell and Flyspell
@@ -338,6 +337,13 @@
 ;; Elixir mode
 (unless (package-installed-p 'alchemist)
   (package-install 'alchemist))
+
+
+;; Java stuff
+(add-hook 'java-mode-hook (lambda ()
+                            (setq c-basic-offset 2
+                                  tab-width 2
+                                  indent-tabs-mode t)))
 
 
 ;; Matlab (thanks @ignaciobll -> github.com/ignaciobll/.emacs.d)
