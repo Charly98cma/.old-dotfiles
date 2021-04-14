@@ -14,8 +14,10 @@
 (setq user-full-name "Carlos Miguel Alonso")
 (setq user-mail-address "1998cma@gmail.com")
 
+
 ;; Load newest byte-code
 (setq load-prefer-newer t)
+
 
 ;; Package management
 (when (>= emacs-major-version 24)
@@ -29,29 +31,32 @@
   (package-install 'use-package))
 (eval-when-compile (require 'use-package))
 
+
 ;; Start-up Options
-(tooltip-mode            -1)
-(tool-bar-mode           -1)
-(menu-bar-mode           -1)
-(scroll-bar-mode         -1)
-(electric-pair-mode       1)
-(show-paren-mode          1)
+(tooltip-mode -1)
+(tool-bar-mode -1)
 (set-window-fringes nil 0 0)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(electric-pair-mode 1)
+(show-paren-mode 1)
 (setq custom-file "~/.emacs.d/.emacs-custom.el")
-(setq make-backup-files nil)
-(setq auto-save-default nil)
+
 
 ;; Delete the selected text when key pressed
 (delete-selection-mode t)
 
+
 ;; Splash-screen
-(setq inhibit-splash-screen     t)
+(setq inhibit-splash-screen t)
 (setq initial-scratch-message nil)
-(setq inhibit-startup-screen    t)
+(setq inhibit-startup-screen t)
+
 
 ;; Indentation
 (setq tab-width 2
       indent-tabs-mode nil)
+
 
 ;; Max. chars per line (auto-fill-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
@@ -62,49 +67,58 @@
 ;; yes/no --> y/n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+
 ;; No Backup and Autosaves (thanks Git ;D)
 (setq make-backup-files nil)
 (setq auto-save-default nil)
+
 
 ;; Marking text
 (transient-mark-mode t)
 (setq select-enable-clipboard t)
 
-;; Personal key bindings
+
+;; Auto-indent new line
 (global-set-key (kbd "RET") 'newline-and-indent)
+
+
+;; Personal key bindings
 (global-set-key (kbd "C-,") 'comment-or-uncomment-region)
+
+
+;; Text-scale
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
+
 ;; Column numbers enabled
 (setq column-number-mode t)
+
 
 ;; Line number
 (global-display-line-numbers-mode)
 (global-hl-line-mode +1)
 
+
 ;; Move-text
 (move-text-default-bindings)
+
 
 ;; Custom font (I like Hack, but I'm looking for other fonts :D)
 (add-to-list 'default-frame-alist '(font . "Hack 11"))
 (set-face-attribute 'default nil :family "Hack 11")
 (set-frame-font "Hack 11")
 
-;; Markdown
-(use-package markdown-mode
-  :ensure t
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'"       . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+
+;; Whitespaces-cleanup-mode (melpa)
+(global-whitespace-cleanup-mode)
+
 
 ;; Modeline (I love the the doom modeline)
 (use-package doom-modeline
   :ensure t
   :defer t
   :hook (after-init . doom-modeline-mode))
-
 (setq doom-modeline-height 10)
 (setq doom-modeline-buffer-file-name-style 'truncate-from-project)
 (setq doom-modeline-icon t)
@@ -114,6 +128,7 @@
 (setq doom-modeline-github t)
 (setq doom-modeline-github-interval (* 30 60))
 (setq find-file-visit-truename t)
+
 
 
 ;; Doom themes (I aso love the doom themes :D)
@@ -137,7 +152,7 @@
                          helm-buffers-fuzzy-matching t
                          helm-recentf-fuzzy-match    t
                          helm-move-to-line-cycle-in-source t
-                         helm-M-x-fuzzy-match        nil))
+                         helm-M-x-fuzzy-match nil))
   :bind (("C-x C-f" . helm-find-files)
          ("M-x"     . helm-M-x)
          ("C-x b"   . helm-mini)
@@ -155,19 +170,10 @@
          ("C-<left>"  . windmove-left)))
 
 
-;;; EXTERNAL PACKAGES
-
-;; Whitespaces-cleanup-mode (melpa)
-(global-whitespace-cleanup-mode)
-
-
 ;; Multiple cursors
 (use-package multiple-cursors
   :ensure t
-  :bind(("C-c mc"  . mc/edit-lines)
-        ("C->"     . mc/mark-next-like-this)
-        ("C-<"     . mc/mark-previous-like-this)
-        ("C-c C-<" . mc/mark-all-like-this)))
+  :bind(("C-c m c" . mc/edit-lines)))
 ;; C-' -> Hide/Unhide all lines without a cursor
 ;; C-g -> exit
 
@@ -190,32 +196,18 @@
   :ensure t
   :init
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode 1))
-(show-paren-mode t)
 
 
 ;; All-the-icons
 (use-package all-the-icons
   :ensure t)
 
-;; Neotree (to be honest, I don't use it)
-;;    C-x n -> open/close neotree
-;;    g -> refresh
-;;    H -> show hidden files
-;;    C-c C-n -> Create file (dir if end with "/")
-;;    C-c C-d -> Delete file/dir
-;;    C-c C-r -> Rename file/dir
-;;    C-c C-p -> Copy file/dir
-;; (use-package neotree
-;;   :ensure t
-;;   :bind (("C-x n" . neotree-toggle))
-;;   :config (setq-default neo-show-hidden-files t)
-;;   (setq neo-smart-open t))
-;; (setq neo-theme (if (display-graphic-p) 'icons)) ; Display icons
 
-
-;; Yasnippet
-(require 'yasnippet)
-(yas-global-mode 1)
+;; Yasnippets
+(use-package yasnippet
+  :ensure t
+  :init (yas-global-mode t)
+  :bind ("C-<tab>" . yas-expand))
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (use-package yasnippet-snippets
@@ -258,7 +250,12 @@
     ("REVIEW" . "#1E90FF")
     ("DOING"  . "#49FF00")))
 (global-hl-todo-mode 1)
-
+(eval-when-compile
+  (defvar hl-todo-mode-map))
+(define-key hl-todo-mode-map (kbd "C-c p") 'hl-todo-previous)
+(define-key hl-todo-mode-map (kbd "C-c n") 'hl-todo-next)
+(define-key hl-todo-mode-map (kbd "C-c o") 'hl-todo-occur)
+(define-key hl-todo-mode-map (kbd "C-c i") 'hl-todo-insert)
 
 ;; Indent fucking Whole Buffer (by github.com/skgsergio)
 ;; Also, thanks to Alfedi for sharing his emacs config (github.com/Alfedi/.emacs.d)
@@ -271,75 +268,109 @@
 (global-set-key (kbd "M-i") 'iwb)
 
 
-;; TOC-ORG
-(use-package toc-org
+;; Which-key (little help with key bindings)
+(use-package which-key
   :ensure t
-  :init (add-to-list 'org-tag-alist '("TOC" . ?T)))
+  :config (which-key-mode))
 
 
-;; ORG-MODE CONFIGURATION
-
-;; Settings
-(setq org-log-done t)
-
-;; Org-Agenda
-(global-set-key (kbd "C-c a") 'org-agenda)
-(setq org-agenda-show-log t)
-(setq org-agenda-todo-ignore-scheduled t)
-(setq org-agenda-todo-ignore-deadlines t)
-
-
-;; Org-Habit
-(require 'org)
-(require 'org-install)
-(require 'org-habit)
-(add-to-list 'org-modules "org-habit")
-(setq org-habit-preceding-days 7
-      org-habit-following-days 1
-      org-habit-graph-column 80
-      org-habit-show-habits-only-for-today t
-      org-habit-show-all-today t)
-
-
-;; Org-Babel
-(require 'ob)
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((shell . t)
-   (ditaa . t)
-   (plantuml . t)
-   (dot . t)
-   (ruby . t)
-   (js . t)
-   (C . t)))
-(setq org-src-fontify-natively t
-      org-confirm-babel-evaluate nil)
-
-(add-hook 'org-babel-after-execute-hook (lambda ()
-                                          (condition-case nil
-                                              (org-display-inline-images)
-                                            (error nil)))
-          'append)
-
-;; Org-abbrev
-(add-hook 'org-mode-hook (lambda () (abbrev-mode 1)))
-
-;; Org-Reveal
-;; (use-package ox-reveal
+;; ;; TOC-ORG
+;; (use-package toc-org
 ;;   :ensure t
-;;   :config
-;;   (setq org-reveal-root "file:///home/carlos/.reveal.js"))
+;;   :init (add-to-list 'org-tag-alist '("TOC" . ?T)))
 
+
+;; ;;; ORG-MODE CONFIGURATION
+
+;; ;; Settings
+;; (setq org-log-done t)
+
+;; ;; Org-Agenda
+;; (global-set-key (kbd "C-c a") 'org-agenda)
+;; (setq org-agenda-show-log t)
+;; (setq org-agenda-todo-ignore-scheduled t)
+;; (setq org-agenda-todo-ignore-deadlines t)
+
+;; ;; Org-Habit
+;; (require 'org)
+;; (require 'org-install)
+;; (require 'org-habit)
+;; (add-to-list 'org-modules "org-habit")
+;; (setq org-habit-preceding-days 7
+;;       org-habit-following-days 1
+;;       org-habit-graph-column 80
+;;       org-habit-show-habits-only-for-today t
+;;       org-habit-show-all-today t)
+
+;; ;; Org-Babel
+;; (require 'ob)
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '((shell . t)
+;;    (ditaa . t)
+;;    (plantuml . t)
+;;    (dot . t)
+;;    (ruby . t)
+;;    (js . t)
+;;    (C . t)))
+;; (setq org-src-fontify-natively t
+;;       org-confirm-babel-evaluate nil)
+;; (add-hook 'org-babel-after-execute-hook (lambda ()
+;;                                           (condition-case nil
+;;                                               (org-display-inline-images)
+;;                                             (error nil)))
+;;           'append)
+;; ;; Org-abbrev
+;; (add-hook 'org-mode-hook (lambda () (abbrev-mode 1)))
 
 
 ;;; PROGRAMMING LANGUAGES AND MORE STUFF
 
+
+;; Markdown
+(use-package markdown-mode
+  :ensure t
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'"       . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+
+;; lsp-mode (autocompletition and syntax suggestions)
+(use-package lsp-mode
+  :ensure t
+  :init (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (bash-mode   . lsp) ;; bash-ls
+         (python-mode . lsp) ;; pyls (Install with pip)
+         (elixir-mode . lsp) ;; elixir-ls (Add language_server.sh to PATH)
+         (java-mode   . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+(use-package lsp-ui
+  :ensure t
+  :bind (("C-c l i" . lsp-ui-imenu)
+         ("C-c l d f" . lsp-ui-doc-focus-frame))
+  :init (lsp-ui-mode)
+  (lsp-ui-doc-mode)
+  (setq lsp-ui-doc-delay 1))
+
+(add-hook 'prog-mode-hook 'lsp-ui-sideline-mode)
+
+
 ;; Elixir mode
-(unless (package-installed-p 'alchemist)
-  (package-install 'alchemist))
+(use-package elixir-mode
+  :ensure t)
+(use-package alchemist
+  :ensure t)
+(add-hook 'elixir-mode-hook
+          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
 
 
 ;; Java stuff
+(eval-when-compile
+  (defvar c-basic-offset))
 (add-hook 'java-mode-hook (lambda ()
                             (setq c-basic-offset 2
                                   tab-width 2
@@ -347,17 +378,17 @@
 
 
 ;; Matlab (thanks @ignaciobll -> github.com/ignaciobll/.emacs.d)
-(use-package matlab-mode
-  :ensure t
-  :mode ("\\.m$\\'" . matlab-mode)
-  :config
-  (setq matlab-indent-function t)
-  (setq matlab-shell-command "matlab")
-  (setq matlab-shell-command-switches (list "-nodesktop")))
+;; (use-package matlab-mode
+;;   :ensure t
+;;   :mode ("\\.m$\\'" . matlab-mode)
+;;   :config
+;;   (setq matlab-indent-function t)
+;;   (setq matlab-shell-command "matlab")
+;;   (setq matlab-shell-command-switches (list "-nodesktop")))
 
 
 ;; MIPS
-(require 'mips-mode)
+;; (require 'mips-mode)
 
 
 ;; Python
