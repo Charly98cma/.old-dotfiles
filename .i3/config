@@ -63,14 +63,31 @@ bindsym XF86AudioMute exec amixer -q -D pulse set Master toggle
 ######################
 
 
+###################
+# MULTIMEDIA KEYS #
+###################
+
+# Touchpad Controls
+bindsym XF86TouchpadToggle exec sh ~/.dotfiles/.i3/toggle-touchpad.sh
+
+# Media player controls
+# bindsym XF86AudioPlay exec playerctl play
+# bindsym XF86AudioPause exec playerctl pause
+# bindsym XF86AudioNext exec playerctl next
+# bindsym XF86AudioPrev exec playerctl previous
+
+###################
+# MULTIMEDIA KEYS #
+###################
+
 
 ##################
 # SCREEN SECTION #
 ##################
 
 # SCREEN BRIGHTNESS CONTROLS
-bindsym XF86MonBrightnessUp   exec "xbacklight -inc 10"
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
+bindsym XF86MonBrightnessUp   exec xbacklight -inc 20
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20
 
 # SCREENSHOTS (escrotum)
 bindsym Print exec --no-startup-id escrotum $f ~/Imágenes/Captura--%Y-%m-%d-%H%M%S.png
