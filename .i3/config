@@ -339,9 +339,11 @@ exec_always --no-startup-id fix_xcursor
 # EMACS
 bindsym $mod+t exec "emacsclient -c -a \\"\\""
 
-# WALLPAPER (ESA wallpapers of 2020)
+# WALLPAPER
+## ESA wallpapers of 2020
 # exec_always --no-startup-id "${HOME}/.dotfiles/.i3/wallpaper/wallpaperScript.sh"
-exec_always --no-startup-id "sleep 5 & python ${HOME}/.dotfiles/.i3/wallpaper/APODWallpaper/apodwallpaper.py"
+## APODwallpaper script
+exec_always --no-startup-id "sleep 10 & python ${HOME}/.dotfiles/.i3/wallpaper/APODWallpaper/apodwallpaper.py"
 
 ##########################################
 # END APPLICATIONS AND CUSTOM PARAMETERS #
