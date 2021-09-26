@@ -18,6 +18,7 @@
 (setq doom-modeline-buffer-file-name-style 'truncate-from-project)
 (setq doom-modeline-icon t)
 (setq doom-modeline-major-mode-icon t)
+(setq doom-modeline-major-mode-color-icon t)
 (setq doom-modeline-minor-modes nil)
 (setq doom-modeline-lsp nil)
 (setq doom-modeline-github t)

@@ -33,8 +33,8 @@
   :commands lsp)
 (use-package lsp-ui
   :ensure t
-  :bind (("C-c l i" . lsp-ui-imenu)
-	 ("C-c l d f" . lsp-ui-doc-focus-frame))
+  :bind (("C-c C-c l i" . lsp-ui-imenu)
+	 ("C-c C-c l d f" . lsp-ui-doc-focus-frame))
   :init (lsp-ui-mode)
   (lsp-ui-doc-mode)
   (setq lsp-ui-doc-delay 1))
@@ -58,6 +58,8 @@
 			    (setq c-basic-offset 2
 				  tab-width 2
 				  indent-tabs-mode t)))
+(require 'lsp-java)
+(add-hook 'java-mode-hook #'lsp)
 
 
 ;; Matlab (thanks @ignaciobll -> github.com/ignaciobll/.emacs.d)

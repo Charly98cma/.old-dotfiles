@@ -26,8 +26,8 @@
 
 ;; Pull data for agenda from these files
 ;; C-c [ and C-c ] to add/remove files to org-agenda-files
-(setq org-agenda-files
-      (directory-files-recursively "~/Documentos/AGENDA/" "\\.org$"))
+;; (setq org-agenda-files
+;;       (directory-files-recursively "~/Documentos/AGENDA/" "\\.org$"))
 
 
 ;; Establish TODO keywords and notes
@@ -98,9 +98,8 @@
 
 (require 'org-capture)
 
-;;
-(setq org-directory "~/Documentos/AGENDA/")
-(setq org-default-notes-file "~/Documentos/AGENDA/refile.org")
+;; (setq org-directory "~/Documentos/AGENDA/")
+;; (setq org-default-notes-file "~/Documentos/AGENDA/refile.org")
 
 ;; I use C-c c to start capture mode
 (global-set-key (kbd "C-c c") 'org-capture)

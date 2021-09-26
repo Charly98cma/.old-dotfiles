@@ -14,19 +14,26 @@
 ;; Load newest byte-code
 (setq load-prefer-newer t)
 
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 ;; Package management
 (eval-when-compile
   (defvar package-archives))
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (add-to-list
-   'package-archives
-   '(("gnu" . "https://elpa.gnu.org/packages/")
-     ("melpa" . "https://melpa.org/packages/"))))
+(setq package-archives '(
+			 ("gnu" . "https://elpa.gnu.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")))
 
+;; (when (>= emacs-major-version 24)
+;;   (require 'package)
+;;   (add-to-list
+;;    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+;;    (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/")))
+;;   )
+   
 (package-initialize)
 (package-refresh-contents)
+(package-install 'use-package)
+
 ;; TODO: Add auto-install packages
 (unless (featurep 'use-package)
   (package-refresh-contents)
@@ -103,6 +110,7 @@
 
 
 ;; Move-text
+(provide 'move-text)
 (move-text-default-bindings)
 
 
@@ -111,6 +119,7 @@
 (set-face-attribute 'default nil :family "Hack 11")
 (set-frame-font "Hack 11")
 
+(use-package all-the-icons)
 
 ;; Whitespaces-cleanup-mode (melpa)
 (global-whitespace-cleanup-mode)

@@ -15,26 +15,26 @@ i3lock \
     --tiling \
     --ignore-empty-password \
     --force-clock \
-    --timestr="%H:%M" \
-    --timecolor=${color} \
-    --timesize=${timeSize} \
-    --datestr="%d/%m/%y" \
-    --datecolor=${color} \
-    --datesize=${dateSize} \
-    --timepos="632:1025" \
-    --datepos="632:1060" \
+    --time-str="%H:%M" \
+    --time-color=${color} \
+    --time-size=${timeSize} \
+    --date-str="%d/%m/%y" \
+    --date-color=${color} \
+    --date-size=${dateSize} \
+    --time-pos="632:1025" \
+    --date-pos="632:1060" \
     --nofork \
-    --lockfailedtext="Failed to lock... Try again" \
-    --noinputtext="" \
-    --verifcolor=ACAEE8FF \
-    --wrongcolor=FF0000FF \
-    --wrongpos=${textPos} \
-    --verifpos=${textPos} \
-    --indpos=${indicatorPos} \
+    --lockfailed-text="Failed to lock... Try again" \
+    --noinput-text="" \
+    --verif-color=ACAEE8FF \
+    --wrong-color=FF0000FF \
+    --wrong-pos=${textPos} \
+    --verif-pos=${textPos} \
+    --ind-pos=${indicatorPos} \
     --radius=146 \
-    --ringcolor=${color} \
-    --insidecolor=00000000 \
-    --veriftext="Checking Starfleet identity..." \
-    --wrongtext="Logging failed... SHIELDS UP! RED ALERT!" \
-    --locktext="" \
+    --ring-color=${color} \
+    --inside-color=00000000 \
+    --verif-text="Checking Starfleet identity..." \
+    --wrong-text="Logging failed... RED ALERT!" \
+    --lock-text="" \
     

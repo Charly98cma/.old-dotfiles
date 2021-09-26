@@ -11,13 +11,15 @@ set $mod Mod4
 # BORDER STYLE <normal | 1pixel | pixel xx | none | pixel>
 new_window none
 new_float normal
+default_border none
+default_floating_border none
 
 # HIDE BORDERS
 hide_edge_borders both
 
 # FONT
 # Font for window titles. Will also be used by the bar unless a different font is used in the bar {} block below.
-font terminus 11
+font xft:Terminus 8
 
 # DRAG FLOATING WINDOWS (Mouse+$mod)
 floating_modifier $mod
@@ -27,6 +29,9 @@ bindsym $mod+Return exec terminator
 
 # KILL FOCUSED WINDOW
 bindsym $mod+Shift+q kill
+
+# KILL WINDOW ON CLICK
+bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # START PROGRAM LAUNCHER (rofi)
 bindsym $mod+d exec "rofi -show drun -modi drun,window,run -font \\"terminus 11\\" -show-icons -sidebar-mode -columns 2 -disable-history -terminal terminator"
@@ -51,23 +56,29 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 ##################
 # This sections could use some work, since Bluetooth headphones volume can't be controlled 
 
+exec --no-startup-id volumeicon
 bindsym $mod+Ctrl+m exec "terminal -fn \\"xft:Hack:style=Medium\\" -e 'alsamixer'"
 
-# VOLUME CONTROLS
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 0.75dB+ unmute
-bindsym XF86AudioLowerVolume exec amixer -q set Master 0.75dB- unmute
-bindsym XF86AudioMute exec amixer -q -D pulse set Master toggle
+#exec --no-startup-id pulseaudio
+#exec --no-startup-id pa-applet
+#bindsym $mod+Ctrl+m exec pavucontrol
+
+# # VOLUME CONTROLS
+# bindsym XF86AudioRaiseVolume exec amixer -q set Master 0.75dB+ unmute
+# bindsym XF86AudioLowerVolume exec amixer -q set Master 0.75dB- unmute
+# bindsym XF86AudioMute exec amixer -q -D pulse set Master toggle
 
 ######################
 # END SOUND CONTROLS #
 ######################
 
 
+
 ###################
 # MULTIMEDIA KEYS #
 ###################
 
-# Touchpad Controls
+# Touchpad Controls (needs xorg-xinput)
 bindsym XF86TouchpadToggle exec sh ~/.dotfiles/.i3/toggle-touchpad.sh
 
 # Media player controls
@@ -85,13 +96,13 @@ bindsym XF86TouchpadToggle exec sh ~/.dotfiles/.i3/toggle-touchpad.sh
 # SCREEN SECTION #
 ##################
 
-# SCREEN BRIGHTNESS CONTROLS
-bindsym XF86MonBrightnessUp   exec xbacklight -inc 20
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20
+# SCREEN BRIGHTNESS CONTROLS (Note: No need with XFCE Power Manager)
+# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
+# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
 # SCREENSHOTS (escrotum)
-bindsym Print exec --no-startup-id escrotum $f ~/Imágenes/Captura--%Y-%m-%d-%H%M%S.png
-bindsym $mod+Shift+Print --release exec --no-startup-id escrotum -s $f ~/Imágenes/Captura--%Y-%m-%d-%H%M%S.png
+bindsym Print exec --no-startup-id escrotum $f ~/Pictures/Screenshot--%Y-%m-%d-%H%M%S.png
+bindsym $mod+Shift+Print --release exec --no-startup-id escrotum -s $f ~/Pictures/Screenshot--%Y-%m-%d-%H%M%S.png
 
 # CHANGE FOCUS
 bindsym $mod+Left  focus left
@@ -124,6 +135,9 @@ bindsym $mod+Shift+space floating toggle
 # CHANGE FOCUS BETWEEN TILING / FLOATING WINDOWS
 bindsym $mod+space focus mode_toggle
 
+# TOGGLE STICKY (floating window follows workspace)
+bindsym $mod+Shift+s sticky toggle
+
 # MOVE THE CURRENTLY FOCUSED WINDOW TO THE SCRATCHPAD
 bindsym $mod+Shift+minus move scratchpad
 # MOVE BETWEEN WINDOWS ON SCRATCHPAD
@@ -132,6 +146,11 @@ bindsym $mod+minus scratchpad show
 # DEFAULT CONFIG FOR NEW WORKSPACES
 default_orientation vertical
 workspace_layout    tabbed
+
+# NAVIGATE WORKSPACES NEXT/PREV
+bindsym $mod+Ctrl+Right workspace next
+bindsym $mod+Ctrl+Left workspace prev
+
 
 # WORKSPACE NAMES
 set $ws1 1
@@ -210,7 +229,7 @@ mode "resize" {
 #########
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
-	font pango:DejaVu Sans Mono, Hack 8
+	font pango:DejaVu Sans Mono, xft:Terminus 8
 	i3bar_command  i3bar
 	status_command i3status
 	position top
@@ -304,9 +323,8 @@ mode "$mode_system" {
 # APPLICATIONS AND CUSTOM PARAMETERS #
 ######################################
 
-# FILE MANAGER (also added 'ranger', because why not)
-bindsym $mod+n exec pcmanfm
-#bindsym $mod+n exec terminator -e 'ranger'
+# FILE MANAGER
+bindsym $mod+n exec terminator -e 'ranger'
 
 # NOTIFICATIONS
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
@@ -317,9 +335,7 @@ for_window [title="File Transfer*"] 	floating enable
 for_window [class="GParted"] 		floating enable border normal
 for_window [title="i3_help"] 		floating enable sticky enable border normal
 for_window [class="Lightdm-settings"] 	floating enable
-for_window [class="Lxappearance"] 	floating enable sticky enable border normal
 for_window [class="Manjaro Settings Manager"] 	floating enable border normal
-for_window [title="MuseScore: Play Panel"] 	floating enable
 for_window [class="Nitrogen"] 		floating enable sticky enable border normal
 for_window [class="qt5ct"] 		floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] 	floating enable sticky enable border normal
@@ -333,17 +349,21 @@ bindsym $mod+l exec --no-startup-id ~/.dotfiles/.i3/lockscreen/i3lock-color.sh
 
 # AUTOSTART APPLICATIONS
 exec --no-startup-id nm-applet
-exec --no-startup-id blueman-applet
+exec --no-startup-id xfce4-power-manager
+
 exec_always --no-startup-id fix_xcursor
+# exec_always --no-startup-id ff-theme-util
 
 # EMACS
 bindsym $mod+t exec "emacsclient -c -a \\"\\""
 
 # WALLPAPER
+
 ## ESA wallpapers of 2020
 # exec_always --no-startup-id "${HOME}/.dotfiles/.i3/wallpaper/wallpaperScript.sh"
+
 ## APODwallpaper script
-exec_always --no-startup-id "sleep 10 & python ${HOME}/.dotfiles/.i3/wallpaper/APODWallpaper/apodwallpaper.py"
+exec_always --no-startup-id "sleep 10 & python ${HOME}/.dotfiles/.i3/wallpaper/APOD-Wallpaper/apodwallpaper.py"
 
 ##########################################
 # END APPLICATIONS AND CUSTOM PARAMETERS #
