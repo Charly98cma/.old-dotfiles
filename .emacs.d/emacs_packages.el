@@ -133,7 +133,8 @@
 ;; Ispell and Flyspell
 (require 'ispell)
 (setq ispell-dictionary "english")
-(add-to-list 'ispell-dictionary-alist '("spanish"))
+(add-to-list
+ 'ispell-dictionary-alist '("spanish"))
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
 (add-hook 'text-mode-hook 'flyspell-mode)
 
