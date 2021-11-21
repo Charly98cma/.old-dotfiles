@@ -56,3 +56,4 @@ source $ZSH/oh-my-zsh.sh
 alias g+++="g++ -Wall -Werror -pedantic -o"
 alias gccc="gcc -g -o"
 alias upmvpn="cd /opt/forticlientsslvpn && sudo sh fortisslvpn.sh"
+alias apod="make -C .dotfiles/.i3/wallpaper/APOD-Wallpaper/ run"
