@@ -2,6 +2,9 @@ WDIR = ${PWD}
 
 install-all: install-emacs install-zsh install-i3
 
+install-packages:
+	./install-packages.sh
+
 install-emacs:
 	ln -fs $(WDIR)/.emacs.d/init.el ~/.emacs.d/init.el
 
