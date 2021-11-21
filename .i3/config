@@ -328,6 +328,10 @@ bindsym $mod+n exec terminator -e 'ranger'
 
 # NOTIFICATIONS
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
+bindsym $mod+j --release exec "dunstctl close"
+bindsym $mod+Shift+j --release exec "dunstctl close-all"
+bindsym $mod+k --release exec "dunstctl history-pop"
+
 
 # OPEN SPECIFIC APPLICATIONS IN FLOATING MODE
 for_window [title="alsamixer"]          floating enable border pixel 1
@@ -364,6 +368,9 @@ bindsym $mod+t exec "emacsclient -c -a \\"\\""
 
 ## APODwallpaper script
 exec_always --no-startup-id "sleep 10 & python ${HOME}/.dotfiles/.i3/wallpaper/APOD-Wallpaper/apodwallpaper.py"
+
+# Change keyboard because I'm a dingus
+exec_always --no-startup-id "setxkbmap -layout es -variant deadtilde"
 
 ##########################################
 # END APPLICATIONS AND CUSTOM PARAMETERS #
